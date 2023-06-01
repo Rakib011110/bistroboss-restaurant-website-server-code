@@ -30,6 +30,7 @@ async function run() {
 
         const menuCollection = client.db("bistroDB").collection("menu");
         const reviewCollection = client.db("bistroDB").collection("reviews");
+        const cartCollection = client.db("bistroDB").collection("carts");
 
 
 
@@ -41,6 +42,16 @@ async function run() {
         app.get('/reviews', async (req, res) => {
             const result = await reviewCollection.find().toArray();
             res.send(result);
+        })
+
+        //  here is insterting cart collection 
+
+
+        app.post("/carts", async (req, res) => {
+            const item = req.body
+            const result = await cartCollection.insertOne(item)
+            res.send(result)
+
         })
 
 
@@ -64,3 +75,17 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
+
+
+/**
+ * --------------------------------
+ *      NAMING CONVENTION
+ * --------------------------------
+ * users : userCollection
+ * app.get('/users')
+ * app.get('/users/:id')
+ * app.post('/users')
+ * app.patch('/users/:id')
+ * app.put('/users/:id')
+ * app.delete('/users/:id')
+*/
